@@ -15,11 +15,9 @@ The Game has two levels. In level 1 it starts with each player entering with a P
 
 ## 📹 Video
 
-<div name="demo" align="center" width=1189px>
-  <p align="center">
-    <img width=800px height=410px src="https://user-images.githubusercontent.com/72984811/107890038-3f346600-6f1f-11eb-90be-58193d0eb449.mp4" alt="Video Demo">
-    </p>
-  </div>  
+
+![ezgif-4-d5309f6ef75d](https://user-images.githubusercontent.com/72984811/107890573-63de0d00-6f22-11eb-9650-1f7ce70014f3.gif)
+ 
 ## 📷 Screenshots
 
 ![Screenshot 2021-02-14 234325](https://user-images.githubusercontent.com/72984811/107890008-0c8a6d80-6f1f-11eb-8de1-f033cd7d8890.png)
