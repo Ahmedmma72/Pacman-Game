@@ -1,0 +1,70 @@
+How to test the program:
+________________________
+1. open Configure Virtual Serial Port Driver and create COM1 and COM2 pair
+2. don't close the Virtual Serial Port Driver
+3. Open DosBox options from start menu and find 
+        serial1 = dummy
+   set it to
+        serial1 = directserial realport:COM1
+4. save the file but keep it open
+5. Open dos box itself then run the file
+        MASM pacmanMaster.asm;
+        LINK pacmanMaster.obj;
+        chat.exe
+6. change
+        serial1 = directserial realport:COM1
+   to
+        serial1 = directserial realport:COM2
+7. do step 5 again but change each pacmanMaster to pacmanSlave
+8. Enjoy
+
+
+
+
+How does the program work:
+__________________________
+1. The program starts by making two arrays called LAST_SEND_X and LAST_REC_X and storing their offset in DI and SI respectively.
+2. Then it initializes the serial port and clears/divide the screen
+3. After that is enters the following loop:
+        a. check if their is a character to receive
+        b. if there isn't move to [g]
+        c. if there is store it in VALUE_REC
+        d. if the character is escape -> exit
+           else if it is backspace mark its flag IS_BACKSPACE
+           else if it is enter mark its flag IS_ENTER
+        e. display the character [5]
+        f. go to [a] again
+        g. if data_send_flag is 1 go to [i]
+        h. check if key board buffer has any key if it does take it else go to [a]
+        i. check if line ready to send or not if not go to [a]
+        j. put the value taken from keyboard in line register and in VALUE_SENT then send
+        k. if the character is escape -> exit
+           else if it is backspace mark its flag IS_BACKSPACE
+           else if it is enter mark its flag IS_ENTER
+        l. display the character [5]
+4. print the character we send:
+        a. check IS_BACKSPACE if it is 1:
+                if CURSOR_SEND_X != 0 :
+                    decrease CURSOR_SEND_X
+                else
+                    if CURSOR_SEND_Y != 0:
+                        move to the previous line (decrease y)
+                        get the end of this line
+                        set the CURSOR_SEND_X on the last character
+                VALUE_SENT = space
+                go to [d]
+        b. check IS_ENTER if it is not 1:
+                go to [d]
+        c. increase CURSOR_SEND_Y to start new line 
+           store CURSOR_SEND_X in [DI] the set it to 0
+           go to [j]
+        d. set the cursor in the new coordinates
+        e. print the VALUE_SENT character
+        f. if IS_BACKSPACE is 1 go to [k]
+        g. increase CURSOR_SEND_X
+        h. if not end of line go to [k]
+        i. go to [c]
+        j. if y == 12 scroll up one line then decrease y else go to [k]
+        k. set new cursor position then clear flags
+
+5. same as 4 but for receiving
